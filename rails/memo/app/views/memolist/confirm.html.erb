@@ -1,0 +1,184 @@
+ <style type="text/css">
+ /*<![CDATA[*/
+body {
+	padding: 10px;
+	margin: 0;
+}
+#container{
+}
+#message1 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: green;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+#message2 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: red;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+#grid-content {
+	margin: 0 60px;   
+	overflow: hidden;
+	border: 0.5px solid #eb6100;
+}
+#target {
+    width: 370px;
+    height: 325px;
+    display: inline-block;
+    vertical-align: bottom;
+}
+ul.pager {
+	margin: 0;
+	padding: 0;
+	font: 100% Arial, Helvetica, sans-serif;
+	text-align: center;
+}
+ul.pager li {
+	list-style: none;
+	display: inline;
+	margin: 0;
+	padding: 0;
+}
+ul.pager li strong {
+	display: -moz-inline-box; /* firefox2 対応 */
+	display: inline-block;
+	padding: 0.25em 0.4em;
+	background-color: #EEEEEE;
+	border: 1px #CCCCCC solid;
+}
+ul.pager li a {
+	display: -moz-inline-box; /* firefox2 対応 */
+	display: inline-block;
+	padding: 0.25em 0.4em;
+	border: 1px #CCCCCC solid;
+}
+
+ul.pager li a:link,
+ul.pager li a:visited {
+	border-color: #CCCCCC;
+	color: #0033FF;
+}
+ul.pager li a:hover,
+ul.pager li a:active {
+	border-color: #003399;
+	background-color: #003399;
+	color: #FFFFFF;
+}/*]]>*/
+</style>
+
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easeing: "easeOutQuint",
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+
+	//sort
+	$("#rsort").click(function(e){
+		$("#grid-content").vgsort(function(a, b){
+			return Math.random() > 0.5 ? 1 : -1 ;
+		}, "easeInOutExpo", 300, 20);
+		hsort_flg = true;
+		return false;
+	});
+});
+//]]>
+</script>
+
+<%# shadowbox %>
+<script type="text/javascript">
+function sbxload( el ) {
+}
+function sbxchange( el ) {
+}
+Shadowbox.init(
+{
+	counterLimit:20,
+	overlayColor:'#000000',
+	overlayOpacity:0.6,
+	onFinish : sbxload,
+	onChange: sbxchange
+},
+function () {
+	Shadowbox.setup("a.swf", {
+		gallery: "swf",
+        width: 510,
+        height: 400,
+        player: "swf",
+        continuous: true,
+		counterType:"skip",
+        flashParams: { allowScriptAccess: "always" }
+	});
+});
+</script>
+
+<%# SORT %>
+  <form action="#" method="get" style="margin-bottom:10px;">
+	<input type="button" id="rsort" value="Random Sort" />
+	<span id="message1">onStart</span>
+	<span id="message2">onFinish</span>
+  </form>
+  <div id="grid-content">
+<%# imgの個数繰り返す %>
+		<% i = 0
+		   while i < @img.size %>
+<%# target 少し大きく %>
+		   <div id="target">
+		   <img src="<%= @img[i] %>" width="360" height="300">
+		     <div style="display:inline;position: absolute; top:0px; left:0px;">
+		   <a class="swf" href="<%= @result[i] %>">
+		   <%= image_tag("/images/click.png", :size => "360x300", :style =>"border:solid 0px #000000") %></a>
+<Div Align="right">
+		   <%=link_to "保存★",:action=>"makedb",:name=>@img[i],:url => @result[i] %>	
+</Div>
+      </div>
+           </div>	
+<% i += 1
+   end %>
+</div>
+<%# ページ数 %>
+<br>
+	<center>
+<ul class="pager">
+	<% i = 0
+	   while i < @page %>
+	   <li> 
+		 <%=link_to i+1,:action=>"getdata",:number=>i,:name => {:"name" => @name} %>	
+	<% i += 1 %>
+      </li>
+	<% end %>
+</ul>
+	<br>
+	<p><a href="javascript:location.href='/hello'">トップページにもどる</a>
+	&nbsp;
+</p>
+</center>

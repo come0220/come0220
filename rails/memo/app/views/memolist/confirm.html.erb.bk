@@ -1,0 +1,143 @@
+ <style type="text/css">
+ /*<![CDATA[*/
+body {
+	padding: 10px;
+	margin: 0;
+}
+#container{
+}
+#message1 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: green;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+#message2 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: red;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+#grid-content {
+	overflow: hidden;
+	border: 0.5px solid #eb6100;
+}
+/*]]>*/
+</style>
+
+<script type="text/javascript">
+//<![CDATA[
+$(function(){
+	var hsort_flg = false;
+
+	//setup
+	var vg = $("#grid-content").vgrid({
+		easeing: "easeOutQuint",
+		time: 400,
+		delay: 20,
+		fadeIn: {
+			time: 500,
+			delay: 50
+		},
+		onStart: function(){
+			$("#message1")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		},
+		onFinish: function(){
+			$("#message2")
+				.css("visibility", "visible")
+				.fadeOut("slow",function(){
+					$(this).show().css("visibility", "hidden");
+				});
+		}
+	});
+
+	//sort
+	$("#hsort").click(function(e){
+		hsort_flg = !hsort_flg;
+		$("#grid-content").vgsort(function(a, b){
+			var _a = $(a).find('h3').text();
+			var _b = $(b).find('h3').text();
+			var _c = hsort_flg ? 1 : -1 ;
+			return (_a > _b) ? _c * -1 : _c ;
+		}, "easeInOutExpo", 300, 0);
+		return false;
+	});
+	$("#rsort").click(function(e){
+		$("#grid-content").vgsort(function(a, b){
+			return Math.random() > 0.5 ? 1 : -1 ;
+		}, "easeInOutExpo", 300, 20);
+		hsort_flg = true;
+		return false;
+	});
+});
+//]]>
+</script>
+
+<script type="text/javascript">
+function sbxload( el ) {
+}
+function sbxchange( el ) {
+}
+Shadowbox.init(
+{
+	counterLimit:20,
+	overlayColor:'#000000',
+	overlayOpacity:0.6,
+	onFinish : sbxload,
+	onChange: sbxchange
+},
+function () {
+	Shadowbox.setup("a.swf", {
+		gallery: "swf",
+        width: 510,
+        height: 400,
+        player: "swf",
+        continuous: true,
+		counterType:"skip",
+        flashParams: { allowScriptAccess: "always" }
+	});
+});
+</script>
+
+<div id="container">
+  <br>
+  <form action="#" method="get" style="margin-bottom:10px;">
+	<input type="button" id="hsort" value="Headline Sort" />
+	<input type="button" id="rsort" value="Random Sort" />
+	<span id="message1">onStart</span>
+	<span id="message2">onFinish</span>
+  </form>
+  <div id="grid-content">
+	<% i = 0
+	   while i < @img.size %>
+	  <div style="display:inline" >
+		<img src="<%= @img[i] %>" width="360" height="300">
+		<div style="display:inline;position: absolute; top:0px; left:0px;">
+		   <a class="swf" href="<%= @result[i] %>">
+			 <img src="/assets/click.png" style='border:solid 0px #000000;width:360px;height:300px'>
+		   </a>
+		</div>
+	  </div>	
+		<% i += 1
+		   end %>		
+  </div>
+	<center>
+	<% i = 0
+	   while i < @page %>
+    <%=link_to i+1,:action=>"getdata",:number=>i,:name => {:"name" => @name} %>	
+	<% i += 1 %>
+	<% end %>
+	<br>
+	<p><a href="javascript:location.href='/hello'">トップページにもどる</a>
+	&nbsp;
+</p>
+</center>
+</div>

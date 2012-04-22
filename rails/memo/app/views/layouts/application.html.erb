@@ -5,12 +5,26 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
-<script src="/assets/shadowbox.js?body=1" type="text/javascript" charset="utf-8"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Content-Style-Type" content="text/css" />
 <meta http-equiv="Content-Script-Type" content="text/javascript" />
 </head>
 <body>
+<body style="padding-top:60px">
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="brand">TEST</a>
+                <ul class="nav">
+                    <li class="active"><a href="./hello">Home</a></li>
+                    <li><a href="./dblist">お気に入り</a></li>
+                </ul>
+                <form action="getdata" class="navbar-search pull-right">
+                <input type="text" class="search-query" placeholder="search" name="name[name]">
+                </form>
+            </div>
+		</div>
+	</div>
 
 <%= yield %>
 

@@ -4,8 +4,6 @@ body {
 	padding: 10px;
 	margin: 0;
 }
-#container{
-}
 #message1 {
 	display: inline-block;
 	width: 6em;
@@ -30,45 +28,6 @@ body {
 #target {
     width: 370px;
     height: 325px;
-    display: inline-block;
-    vertical-align: bottom;
-}
-ul.pager {
-	margin: 0;
-	padding: 0;
-	font: 100% Arial, Helvetica, sans-serif;
-	text-align: center;
-}
-ul.pager li {
-	list-style: none;
-	display: inline;
-	margin: 0;
-	padding: 0;
-}
-ul.pager li strong {
-	display: -moz-inline-box; /* firefox2 対応 */
-	display: inline-block;
-	padding: 0.25em 0.4em;
-	background-color: #EEEEEE;
-	border: 1px #CCCCCC solid;
-}
-ul.pager li a {
-	display: -moz-inline-box; /* firefox2 対応 */
-	display: inline-block;
-	padding: 0.25em 0.4em;
-	border: 1px #CCCCCC solid;
-}
-
-ul.pager li a:link,
-ul.pager li a:visited {
-	border-color: #CCCCCC;
-	color: #0033FF;
-}
-ul.pager li a:hover,
-ul.pager li a:active {
-	border-color: #003399;
-	background-color: #003399;
-	color: #FFFFFF;
 }/*]]>*/
 </style>
 
@@ -146,18 +105,17 @@ function () {
   </form>
 <% @memodb = Memodb.all %>
 <div id="grid-content">
-<% @memodb.each do |memodb| %>
-		   <div id="target">
-		   <img src="<%= memodb.name %>" width="360" height="300">
-		     <div style="display:inline;position: absolute; top:0px; left:0px;">
-		   <a class="swf" href="<%= memodb.url %>">
-		   <%= image_tag("/images/click.png", :size => "360x300", :style =>"border:solid 0px #000000") %></a>
-<Div Align="right">
-  <%=link_to "DELETE",:action=>"dbdelete",:name=> memodb.name%>	
-</Div>
-      </div>
-           </div>	
-	<% end %>
+  <% @memodb.each do |memodb| %>
+	<div id="target">
+	  <img src="<%= memodb.name %>" width="360" height="300">
+	  <div style="display:inline;position: absolute; top:0px; left:0px;">
+		<a class="swf" href="<%= memodb.url %>">
+		  <%= image_tag("/images/click.png", :size => "360x300") %></a>
+	  <div Align="right">
+		<%=link_to "DELETE",:action=>"dbdelete",:name=> memodb.name%></div>
+	</div>	
+  </div>
+  <% end %>
 </div>
 <br>
 	<center>

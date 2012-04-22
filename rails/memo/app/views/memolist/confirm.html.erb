@@ -32,43 +32,6 @@ body {
     height: 325px;
     display: inline-block;
     vertical-align: bottom;
-}
-ul.pager {
-	margin: 0;
-	padding: 0;
-	font: 100% Arial, Helvetica, sans-serif;
-	text-align: center;
-}
-ul.pager li {
-	list-style: none;
-	display: inline;
-	margin: 0;
-	padding: 0;
-}
-ul.pager li strong {
-	display: -moz-inline-box; /* firefox2 対応 */
-	display: inline-block;
-	padding: 0.25em 0.4em;
-	background-color: #EEEEEE;
-	border: 1px #CCCCCC solid;
-}
-ul.pager li a {
-	display: -moz-inline-box; /* firefox2 対応 */
-	display: inline-block;
-	padding: 0.25em 0.4em;
-	border: 1px #CCCCCC solid;
-}
-
-ul.pager li a:link,
-ul.pager li a:visited {
-	border-color: #CCCCCC;
-	color: #0033FF;
-}
-ul.pager li a:hover,
-ul.pager li a:active {
-	border-color: #003399;
-	background-color: #003399;
-	color: #FFFFFF;
 }/*]]>*/
 </style>
 
@@ -168,16 +131,18 @@ function () {
 <%# ページ数 %>
 <br>
 	<center>
-<ul class="pager">
-	<% i = 0
-	   while i < @page %>
-	   <li> 
-		 <%=link_to i+1,:action=>"getdata",:number=>i,:name => {:"name" => @name} %>	
-	<% i += 1 %>
-      </li>
-	<% end %>
+	  
+      <div class="pagination">
+        <ul>
+		  <% i = 0
+			 while i < @page %>
+			 <li> 
+			   <%=link_to i+1,:action=>"getdata",:number=>i,:name => {:"name" => @name} %>	
+		  <% i += 1 %>
+</li>
+<% end %>
 </ul>
-	<br>
+</div>
 	<p><a href="javascript:location.href='/hello'">トップページにもどる</a>
 	&nbsp;
 </p>

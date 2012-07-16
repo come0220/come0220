@@ -1,5 +1,6 @@
 # coding: utf-8
 class ApplicationController < ActionController::Base
+  include Jpmobile::ViewSelector
 
   def hello
   end
@@ -21,6 +22,12 @@ class ApplicationController < ActionController::Base
     @href[i] = tmp[0,10] + hrefs2[i]
     i =+1
     end    
+  end
+
+  def authenticate
+  authenticate_or_request_with_http_basic do |user_name, password|
+    user_name == 'admin' && password == 'password'
+  end
   end
 
   def test

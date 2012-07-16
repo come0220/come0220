@@ -1,40 +1,4 @@
- <style type="text/css">
- /*<![CDATA[*/
-body {
-	padding: 10px;
-	margin: 0;
-}
-#container{
-}
-#message1 {
-	display: inline-block;
-	width: 6em;
-	text-align: center;
-	background: green;
-	visibility: hidden;
-	color: #FFFFFF;
-}
-#message2 {
-	display: inline-block;
-	width: 6em;
-	text-align: center;
-	background: red;
-	visibility: hidden;
-	color: #FFFFFF;
-}
-#grid-content {
-	margin: 0 60px;   
-	overflow: hidden;
-	border: 0.5px solid #eb6100;
-}
-#target {
-    width: 370px;
-    height: 325px;
-    display: inline-block;
-    vertical-align: bottom;
-}/*]]>*/
-</style>
-
+<%= stylesheet_link_tag    "mystyle" %>
 <script type="text/javascript">
 //<![CDATA[
 $(function(){
@@ -135,7 +99,7 @@ function () {
       <div class="pagination">
         <ul>
 		  <% i = 0
-			 while i < @page %>
+			 while i < @page-1 %>
 			 <li> 
 			   <%=link_to i+1,:action=>"getdata",:number=>i,:name => {:"name" => @name} %>	
 		  <% i += 1 %>

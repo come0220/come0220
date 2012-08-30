@@ -41,10 +41,11 @@ before_filter :authenticate
        @result = Array.new();
         #url取得
         tmp.each do |tmp|
-        @result[i] = tmp[6,7]
-        if @result[i][@result[i].length-1] == "/" then
-           @result[i] = tmp[6,6]
+        tmp2 = tmp[6,7]
+        if tmp2[tmp2.length-1] == "/" then
+           tmp2 = tmp[6,6]
         end
+        @result[i] = "http://www.xvideos.com/sitevideos/flv_player_site_v4.swf?id_video=#{tmp2}"
         i+=1
         end
         render :action => 'confirm'  

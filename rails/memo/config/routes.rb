@@ -1,5 +1,7 @@
 Memo::Application.routes.draw do
-  resources :databases
+  resources :memolists do
+  resources :comments
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,4 +1,36 @@
-<%= stylesheet_link_tag    "mystyle" %>
+ <style type="text/css">
+ /*<![CDATA[*/
+body {
+	padding: 10px;
+	margin: 0;
+}
+#message1 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: green;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+#message2 {
+	display: inline-block;
+	width: 6em;
+	text-align: center;
+	background: red;
+	visibility: hidden;
+	color: #FFFFFF;
+}
+#grid-content {
+	margin: 0 60px;   
+	overflow: hidden;
+	border: 0.5px solid #eb6100;
+}
+#target {
+    width: 370px;
+    height: 325px;
+}/*]]>*/
+</style>
+
 <script type="text/javascript">
 //<![CDATA[
 $(function(){
@@ -41,7 +73,6 @@ $(function(){
 //]]>
 </script>
 
-<%# shadowbox %>
 <script type="text/javascript">
 function sbxload( el ) {
 }
@@ -67,47 +98,40 @@ function () {
 	});
 });
 </script>
-
-<%# SORT %>
   <form action="#" method="get" style="margin-bottom:10px;">
 	<input type="button" id="rsort" value="Random Sort" />
 	<span id="message1">onStart</span>
 	<span id="message2">onFinish</span>
   </form>
-  <div id="grid-content">
-<%# imgの個数繰り返す %>
-		<% i = 0
-		   while i < @img.size %>
-<%# target 少し大きく %>
-		   <div id="target">
-		   <img src="<%= @img[i] %>" width="360" height="300">
-		     <div style="display:inline;position: absolute; top:0px; left:0px;">
-		   <a class="swf" href="http://static.xvideos.com/swf/xv-player.swf?id_video=<%= @result[i] %>">
-		   <%= image_tag("/images/click.png", :size => "360x300", :style =>"border:solid 0px #000000") %></a>
-<Div Align="right">
-		   <%=link_to "保存★",:action=>"makedb",:name=>@img[i],:url => @result[i] %>	
-</Div>
-      </div>
-           </div>	
-<% i += 1
-   end %>
+<div id="grid-content">
+  <% @memodb.each do |memodb| %>
+	<div id="target">
+	  <img src="<%= memodb.name %>" width="360" height="300">
+	  <div style="display:inline;position: absolute; top:0px; left:0px;">
+		<a class="swf" href="<%= memodb.url %>">
+		  <%= image_tag("/images/click.png", :size => "360x300") %></a>
+	  <div Align="right">
+		<%=link_to "DELETE",:action=>"destroy",:name=> memodb.name%></div>
+<%= link_to "Delete",memolists_path,:confirm => 'Sure?',
+                            :method => :delete,:remote => true%>	</div>	
+  </div>
+  <% end %>
 </div>
-<%# ページ数 %>
 <br>
 	<center>
-	  
-      <div class="pagination">
-        <ul>
-		  <% i = 0
-			 while i < @page-1 %>
-			 <li> 
-			   <%=link_to i+1,:action=>"getdata",:number=>i,:name => {:"name" => @name} %>	
-		  <% i += 1 %>
-</li>
-<% end %>
-</ul>
-</div>
-	<p><a href="javascript:location.href='/hello'">トップページにもどる</a>
-	&nbsp;
-</p>
-</center>
+	<br>
+	<a href="javascript:location.href='/hello'">トップページにもどる</a>
+	</center>
+
+<script>
+$(function() {
+  setTimeout(function() {
+    $('#notice').fadeOut("slow");
+  }, 800);
+  
+  $('a[data-method="delete"]').live('ajax:success', function(e, data, status, xhr) {
+    $('#memolist_'+data.memolist.id).fadeOut("slow");
+  });
+  
+});
+</script>

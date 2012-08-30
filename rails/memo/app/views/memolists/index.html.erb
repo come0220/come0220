@@ -1,0 +1,24 @@
+ <style type="text/css">
+body
+    {
+     margin:0px;          /* ページ全体のmargin */
+     padding:0px;         /* ページ全体のpadding */
+     text-align:center;   /* 下記のautoに未対応用のセンタリング */
+    }
+
+#site-box
+    {
+	width: 600px;
+	height: 250px;
+    margin: -150px 0px 0px -300px;
+	left: 50%;
+	top: 50%;
+	position: absolute;
+    }
+ </style>
+<div id="site-box">
+<%= form_tag({:action=>"getdata"}, {"number"=>"0"}) %>
+<%= text_field 'name','name' %>
+<br><br>
+<%= submit_tag "送信",:class=>"btn-success"%>
+</div>

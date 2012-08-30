@@ -98,6 +98,10 @@ function () {
 	});
 });
 </script>
+<script type="text/javascript">
+ var flashvars = {'flv':'flv.swf'};
+var params = {menu:'false',wmode:'opaque'};
+var attributes = {}; swfobject.embedSWF("flv.swf", "flash", "320", "240", "8.0.0","img/expressInstall.swf",flashvars,params,attributes); </script> 
   <form action="#" method="get" style="margin-bottom:10px;">
 	<input type="button" id="rsort" value="Random Sort" />
 	<span id="message1">onStart</span>
@@ -105,15 +109,18 @@ function () {
   </form>
 <div id="grid-content">
   <% @memodb.each do |memodb| %>
+   <div id="memodb_<%= memodb.id %>">
 	<div id="target">
 	  <img src="<%= memodb.name %>" width="360" height="300">
 	  <div style="display:inline;position: absolute; top:0px; left:0px;">
-		<a class="swf" href="<%= memodb.url %>">
+		<a class="swf" href="http://static.xvideos.com/swf/xv-player.swf?id_video=<%= memodb.url %>">
 		  <%= image_tag("/images/click.png", :size => "360x300") %></a>
 	  <div Align="right">
 		<%=link_to "DELETE",:action=>"dbdelete",:name=> memodb.name%></div>
 	</div>	
   </div>
+  </div>
+ <iframe src="http://flashservice.xvideos.com/embedframe/<%= memodb.url %> "frameborder=0 width=370 height=325 scrolling=no></iframe>
   <% end %>
 </div>
 <br>
@@ -121,3 +128,16 @@ function () {
 	<br>
 	<a href="javascript:location.href='/hello'">トップページにもどる</a>
 	</center>
+
+<script>
+$(function() {
+  setTimeout(function() {
+    $('#notice').fadeOut("slow");
+  }, 800);
+  
+  $('a[data-method="delete"]').live('ajax:success', function(e, data, status, xhr) {
+    $('#memodb_'+data.memodb.id).fadeOut("slow");
+  }
+  
+});
+</script>
